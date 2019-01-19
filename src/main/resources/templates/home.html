@@ -107,7 +107,7 @@
                         var phChart = new Chart(ctx, {
                             type: 'line',
                             data: {
-                                // labels: [0, 1, 2, 3, 4, 5],
+                                labels: [],
                                 datasets: [{
                                     fill: false,
                                     label: 'PH level',
@@ -160,7 +160,7 @@
                             var tempChart = new Chart(ctx, {
                                 type: 'line',
                                 data: {
-                                    // labels: [0, 1, 2, 3, 4, 5],
+                                    labels: [],
                                     datasets: [{
                                         label: 'Temperature °C',
                                         fill: false,
@@ -233,21 +233,7 @@
                 success: function (data) {
                     console.log("next ph is " + data);
                     $("#current-ph").text(data);
-                    // updateChart(phChart, data);
-
-                    var thisDataSet = phChart.data.datasets[0].data;
-                    if (phDataIndex < phTimelineSize) {
-                        thisDataSet[phDataIndex] = data;
-                        console.log("updating chart with data: " + data);
-                        console.log("dataset: " + phChart);
-                        phDataIndex++;
-                    } else {
-                        for (i = 0; i < phTimelineSize - 2; i++) {
-                            thisDataSet[i] = thisDataSet[i + 1];
-                        }
-                        thisDataSet[phTimelineSize - 1] = data;
-                    }
-                    phChart.update();
+                    updateChart(phChart, data);
                 }
             })
         }
@@ -255,9 +241,6 @@
         getNextPh();
         setInterval(getNextPh, 5000);
 
-
-        var tempTimelineSize = 10;
-        var tempDataIndex = 0;
         function getNextTemp() {
             console.log("getting next temp");
             $.ajax({
@@ -266,27 +249,25 @@
                 success: function (data) {
                     console.log("next temps is " + data);
                     $("#current-temp").text(data);
-
-                    // updateChart(tempChart, data);
-                    var thisDataSet = tempChart.data.datasets[0].data;
-                    if (tempDataIndex < tempTimelineSize) {
-                        thisDataSet[phDataIndex] = data;
-                        console.log("updating chart with data: " + data);
-                        console.log("dataset: " + tempChart);
-                        tempDataIndex++;
-                    } else {
-                        for (i = 0; i < tempTimelineSize - 2; i++) {
-                            thisDataSet[i] = thisDataSet[i + 1];
-                        }
-                        thisDataSet[tempTimelineSize - 1] = data;
-                    }
-                    tempChart.update();
+                    updateChart(tempChart, data);
                 }
             })
         }
-
         getNextTemp();
-        setInterval(getNextTemp, 5000)
+        setInterval(getNextTemp, 5000);
+
+        // updating the chart
+        function updateChart(chart, data) {
+            chart.data.datasets[0].data.push(data);
+            chart.data.labels.push(chart.data.labels.length);
+            if (chart.data.labels.length >= 10) {
+                chart.data.datasets[0].data.splice(0, 1);
+                chart.data.labels.splice(0, 1);
+            }
+            console.log("data" + chart.data.datasets[0].data);
+            chart.update();
+
+        }
     </script>
 </div>
 </body>
