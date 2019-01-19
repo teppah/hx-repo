@@ -70,31 +70,6 @@
 
 <!--PH GRAPH-->
 <div class="container-fluid" align="center">
-    <div class="row" style="margin-top: 10px;" align="center">
-        <div class="card col-sm-6 mx-auto" align="center">
-            <div class="card-body">
-                <h5 class="card-title">Monitor</h5>
-                <div class="row">
-                    <div class="col-sm-6">
-                        <div class="card">
-                            <div class="card-body">
-                                <h6 class="card-title">Current pH</h6>
-                                <h6 class="card-text" id="current-ph">Placeholder</h6>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-6">
-                        <div class="card">
-                            <div class="card-body">
-                                <h6 class="card-title">Current temperature</h6>
-                                <h6 class="card-text" id="current-temp">Placeholder</h6>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
 
     <div class="row container-fluid" align="center" style="margin-top: 10px; margin-left: 1px;">
         <div class="card col-sm-7 graph-container">
@@ -143,6 +118,14 @@
             <div class="card-body ">
                 <h4 class="card-title" align="center">Control PH</h4>
                 <a class="btn btn btn-outline-primary col-sm-12" id="spike-ph">Abnormal pH</a>
+                <div style="margin-top: 20px;" class="col-sm-12">
+	                <div id="ph-box" class="card">
+	                    <div class="card-body">
+	                        <h6 class="card-title">Current pH</h6>
+	                        <h6 class="card-text" id="current-ph">Placeholder</h6>
+	                    </div>
+	                </div>
+	            </div>
             </div>
         </div>
     </div>
@@ -196,6 +179,14 @@
             <div class="card-body ">
                 <h4 class="card-title" align="center">Control Temps</h4>
                 <a class="btn btn btn-outline-primary col-sm-12" id="spike-temp">Abnormal temperature</a>
+                <div style="margin-top: 20px;" class="col-sm-12">
+                    <div id="temp-box" class="card">
+                        <div class="card-body">
+                            <h6 class="card-title">Current temperature</h6>
+                            <h6 class="card-text" id="current-temp">Placeholder</h6>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -234,6 +225,14 @@
                     console.log("next ph is " + data);
                     $("#current-ph").text(data);
                     updateChart(phChart, data);
+
+                    if (data > 7.5 || data < 6.5) {
+                    	$("#ph-box").css('background-color', 'red');
+                    	phChart.data.datasets[0].points[phChart.data.datasets[0].points.length - 1].fillColor = "rgb(255, 0, 0)";
+                    }
+                    else {
+                    	$("#ph-box").css('background-color', 'white');	
+                    }
                 }
             })
         }
@@ -249,6 +248,14 @@
                 success: function (data) {
                     console.log("next temps is " + data);
                     $("#current-temp").text(data);
+           
+                    if (data > 30 || data < 20) {
+                    	$("#temp-box").css('background-color', 'red');
+                    	tempChart.data.datasets[0].points[tempChart.data.datasets[0].points.length - 1].fillColor = "rgb(255, 0, 0)";
+                    }
+                    else {
+                    	$("#temp-box").css('background-color', 'white');	
+                    }
                     updateChart(tempChart, data);
                 }
             })
