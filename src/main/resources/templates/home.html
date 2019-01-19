@@ -1,186 +1,215 @@
 <!doctype html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-  <head>
+<head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.bundle.min.js" integrity="sha256-MZo5XY1Ah7Z2Aui4/alkfeiq3CopMdV/bbkc/Sh41+s=" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
+          integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.bundle.min.js"
+            integrity="sha256-MZo5XY1Ah7Z2Aui4/alkfeiq3CopMdV/bbkc/Sh41+s=" crossorigin="anonymous"></script>
 
     <title>Micro</title>
-  </head>
+</head>
 
-  <style type="text/css">
-    .graphcontainer {
-      float: left;
-      display: inline-block;
-      width: 65%;
-      height: 300px;
-      background-color: white;
-      border-radius: 5px;
-      border-color: #cccccc;
-      border-style: solid;
-      border-width: 2px;
+<style type="text/css">
+    .graph-container {
+        /*float: left;*/
+        /*display: inline-block;*/
+        /*width: 65%;*/
+        /*height: 300px;*/
+        /*background-color: white;*/
+        /*border-radius: 5px;*/
+        /*border-color: #cccccc;*/
+        /*border-style: solid;*/
+        /*border-width: 2px;*/
+        /*margin-top: 30px;*/
+        /*max-height: 30%;*/
+
+        max-height: 600px;
     }
 
-    .graphdiv {
+    .graph-div {
+        height: 100%;
+    }
+    .graph-canvas {
+        max-height: 500px;
     }
 
     .dashboard {
-      float: right;
-      display: inline;
-      width: 30%;
-      height: 630px;
-      background-color: white;
-      border-radius: 5px;
-      border-color: #cccccc;
-      border-style: solid;
-      border-width: 2px;
-      text-align: center;
+        float: right;
+        display: inline;
+        /*width: 30%;*/
+        /*height: 630px;*/
+        background-color: white;
+        border-radius: 5px;
+        border-color: #cccccc;
+        border-style: solid;
+        border-width: 2px;
+        text-align: center;
     }
 
     .displaytab {
-    	display: inline-block;
-    	position: relative;
-    	align-self: center;
-    	margin-top: 30px;
-    	height: 250px;
-    	width: 90%;
-    	border-style: solid;
-    	border-color: #cccccc;
-    	border-width: 2px;
-    	border-radius: 5px;
+        display: inline-block;
+        position: relative;
+        align-self: center;
+        margin-top: 30px;
+        /*height: 250px;*/
+        /*width: 90%;*/
+        border-style: solid;
+        border-color: #cccccc;
+        border-width: 2px;
+        border-radius: 5px;
     }
 
-  </style>
+</style>
 
-  <body style="background-color: #f2f2f2; font-family: Trebuchet MS, Helvetica, sans-serif;">
-  <div>
+<body style="background-color: #f2f2f2; font-family: Trebuchet MS, Helvetica, sans-serif;">
+<div class="col-sm-12">
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-      <a class="navbar-brand" href="home">Micreau Monitor</a>
-      <div class="container-fluid" id="navbarNav">
-        <ul class="nav navbar-nav">
-          <li class="nav-item">
-            <a class="nav-link" href="#">Settings</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">My Account</a>
-          </li>
-        </ul>
-        <ul class="nav navbar-nav navbar-right">
-          <li class="nav-item active">
-            <a class="nav-link" href="login">Logout</a>
-          </li>
-        </ul>
-      </div>
+        <a class="navbar-brand" href="home">Micreau Management</a>
+        <div class="container-fluid" id="navbarNav">
+            <ul class="nav navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Settings</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">My Account</a>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li class="nav-item active">
+                    <a class="nav-link" href="login">Logout</a>
+                </li>
+            </ul>
+        </div>
     </nav>
-  <div/>
+</div>
 
-  <content>
-    <div style="margin-left: 30px; margin-top: 30px;" class="graphcontainer">
-      <h5 align="center" style="position: relative; top: 10px;">PH graph</h5>
-      <div class="graphdiv col-lg-12">
-      	<canvas id="phgraph" width="auto;" height="80px"></canvas>
-      	<script type="text/javascript">
-      		var ctx = document.getElementById("phgraph").getContext('2d');
-			var myChart = new Chart(ctx, {
-			    type: 'line',
-			    data: {
-			        labels: [0, 1, 2, 3, 4, 5],
-			        datasets: [{
-			        	fill: false,
-			            label: 'PH level',
-			            data: [12, 19, 3, 5, 2, 3],
-			            backgroundColor: [
-							'rgba(255, 255, 255, 0.2)',
-			            ],
-			            borderColor: [
-			                'rgba(0, 123, 255, 1)',
-			            ],
-			            borderWidth: 1
-			        }]
-			    },
-			    options: {
-			        scales: {
-			            yAxes: [{
-			                ticks: {
-			                    beginAtZero:true
-			                }
-			            }]
-			        }
-			    }
-			});
-      	</script>
-      </div>
-    </div>
-
-    <div style="margin-right: 30px; margin-top: 30px;" class="dashboard", id="dashboard">
-      <h5 align="center" style="position: relative; top: 10px;">Dashboard</h5>
-
-      <div class="displaytab">
-      	<div style="height: 160px; width: auto;">
-      		<label style="position: relative; margin-top: 5px;">Current PH</label>
-      	</div>
-
-      	<button style="margin-top: 30px; margin-left: 20px;" class="btn btn-primary" id="spikePH">Spike PH</button>
-		<button style="margin-top: 30px; margin-left: 20px;" class="btn btn-primary" id="spikePH">Drop PH</button>
-      </div>
-
-      <div class="displaytab">
-      	<div style="height: 160px; width: auto;">
-      		<label style="position: relative; margin-top: 5px;">Current Temperature</label>
-      	</div>
-
-      	<button style="margin-top: 30px; margin-left: 20px;" class="btn btn-primary" id="spikeT">Spike Temperature</button>
-		<button style="margin-top: 30px; margin-left: 20px;" class="btn btn-primary" id="spikeT">Drop Temperature</button>
-      </div>
+<div class="container-fluid">
+    <div class="row" style="margin-top: 10px; margin-left: 1px;">
+        <div class="card col-sm-6 graph-container">
+            <div class="card-body">
+                <h6 class="card-title" align="center">PH graph</h6>
+                <div class="graph-div">
+                    <canvas class="graph-canvas" id="ph-graph" width="auto"></canvas>
+                    <script type="text/javascript">
+                        var ctx = document.getElementById("ph-graph").getContext('2d');
+                        var myChart = new Chart(ctx, {
+                            type: 'line',
+                            data: {
+                                labels: [0, 1, 2, 3, 4, 5],
+                                datasets: [{
+                                    fill: false,
+                                    label: 'PH level',
+                                    data: [12, 19, 3, 5, 2, 3],
+                                    backgroundColor: [
+                                        'rgba(255, 255, 255, 0.2)',
+                                    ],
+                                    borderColor: [
+                                        'rgba(0, 123, 255, 1)',
+                                    ],
+                                    borderWidth: 1
+                                }]
+                            },
+                            options: {
+                                scales: {
+                                    yAxes: [{
+                                        ticks: {
+                                            beginAtZero: true
+                                        }
+                                    }]
+                                }
+                            }
+                        });
+                    </script>
+                </div>
+            </div>
+        </div>
 
     </div>
 
-    <div style="margin-left: 30px; margin-top: 30px;" class="graphcontainer">
-      <h5 align="center" style="position: relative; top: 10px;">Temperature graph</h5>
-      <div class="graphdiv col-lg-12">
-      	<canvas id="Tgraph" width="auto" height="80px"></canvas>
-      	<script type="text/javascript">
-      		var ctx = document.getElementById("Tgraph").getContext('2d');
-			var myChart = new Chart(ctx, {
-			    type: 'line',
-			    data: {
-			        labels: [0, 1, 2, 3, 4, 5],
-			        datasets: [{
-			            label: 'Temperature °C',
-			            fill: false,
-			            data: [-12, -19, -3, 5, -2, 3],
-			            backgroundColor: [
-			                'rgba(255, 255, 255, 0.2)',
-			            ],
-			            borderColor: [
-							'rgba(0, 123, 255, 1)',
-			            ],
-			            borderWidth: 1
-			        }]
-			    },
-			    options: {
-			        scales: {
-			            yAxes: [{
-			                ticks: {
-			                    beginAtZero:false
-			                }
-			            }]
-			        }
-			    }
-			});
-      	</script>
-      </div>
+    <div class="row" style="margin-top:10px; margin-left: 1px;">
+        <div class="card col-sm-6 graph-container">
+            <div class="card-body">
+                <div class="col-sm-12">
+                    <h6 align="center" class="card-title">Temperature graph</h6>
+                    <div class="graph-div">
+                        <canvas class="graph-canvas" id="t-graph" width="auto"></canvas>
+                        <script type="text/javascript">
+                            var ctx = document.getElementById("t-graph").getContext('2d');
+                            var myChart = new Chart(ctx, {
+                                type: 'line',
+                                data: {
+                                    labels: [0, 1, 2, 3, 4, 5],
+                                    datasets: [{
+                                        label: 'Temperature °C',
+                                        fill: false,
+                                        data: [-12, -19, -3, 5, -2, 3],
+                                        backgroundColor: [
+                                            'rgba(255, 255, 255, 0.2)'
+                                        ],
+                                        borderColor: [
+                                            'rgba(0, 123, 255, 1)'
+                                        ],
+                                        borderWidth: 1
+                                    }]
+                                },
+                                options: {
+                                    scales: {
+                                        yAxes: [{
+                                            ticks: {
+                                                beginAtZero: false
+                                            }
+                                        }]
+                                    }
+                                }
+                            });
+                        </script>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
-  </content>
 
-    <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
-  </body>
+    <!--<div style="margin-right: 30px; margin-top: 30px;" class="dashboard col-lg-4" id="dashboard">-->
+    <!--<h5 align="center" style="position: relative; top: 10px;">Dashboard</h5>-->
+
+    <!--<div class="displaytab">-->
+    <!--<div style="height: 160px; width: auto;">-->
+    <!--<label style="position: relative; margin-top: 5px;">Current PH</label>-->
+    <!--</div>-->
+
+    <!--<button style="margin-top: 30px; margin-left: 20px;" class="btn btn-primary" id="spikePh">Spike PH</button>-->
+    <!--<button style="margin-top: 30px; margin-left: 20px;" class="btn btn-primary" id="dropPh">Drop PH</button>-->
+    <!--</div>-->
+
+    <!--<div class="displaytab">-->
+    <!--<div style="height: 160px; width: auto;">-->
+    <!--<label style="position: relative; margin-top: 5px;">Current Temperature</label>-->
+    <!--</div>-->
+
+    <!--<button style="margin-top: 30px; margin-left: 20px;" class="btn btn-primary" id="spikeT">Spike Temperature-->
+    <!--</button>-->
+    <!--<button style="margin-top: 30px; margin-left: 20px;" class="btn btn-primary" id="dropT">Drop Temperature-->
+    <!--</button>-->
+    <!--</div>-->
+    <!--</div>-->
+
+</div>
+
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"
+        integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"
+        integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k"
+        crossorigin="anonymous"></script>
+</body>
 </html>

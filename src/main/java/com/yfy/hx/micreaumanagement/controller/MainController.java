@@ -67,14 +67,14 @@ public class MainController {
         return genNextTemp(nextTempSpike);
     }
 
-    // spike ph on next data
+    // spike ph on next icon.png
     @GetMapping("api/spikePh")
     @ResponseBody
     public void spikePh() {
         nextPhSpike = true;
     }
 
-    // spike temp on next data
+    // spike temp on next icon.png
     @GetMapping("api/spikeTemp")
     @ResponseBody
     public void spikeTemp() {
