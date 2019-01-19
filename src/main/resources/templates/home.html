@@ -12,6 +12,18 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.bundle.min.js"
             integrity="sha256-MZo5XY1Ah7Z2Aui4/alkfeiq3CopMdV/bbkc/Sh41+s=" crossorigin="anonymous"></script>
 
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+            integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+            crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/popper.js@1.12.6/dist/umd/popper.js"
+            integrity="sha384-fA23ZRQ3G/J53mElWqVJEGJzU0sTs+SvzG8fXVWP+kJQ1lwFAOkcUOysnlKJC33U"
+            crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/bootstrap-material-design@4.1.1/dist/js/bootstrap-material-design.js"
+            integrity="sha384-CauSuKpEqAFajSpkdjv3z9t8E7RlpJ1UP0lKM/+NdtSarroVKu069AlsRPKkFBz9"
+            crossorigin="anonymous"></script>
+
     <title>Micro</title>
 </head>
 
@@ -59,15 +71,15 @@
 <!--PH GRAPH-->
 <div class="container-fluid" align="center">
     <div class="row" style="margin-top: 10px;" align="center">
-        <div class="card col-sm-6 mx-auto bg-info" align="center">
+        <div class="card col-sm-6 mx-auto" align="center">
             <div class="card-body">
-                <h5 class="card-title text-white">Monitor</h5>
+                <h5 class="card-title">Monitor</h5>
                 <div class="row">
                     <div class="col-sm-6">
                         <div class="card">
                             <div class="card-body">
                                 <h6 class="card-title">Current pH</h6>
-                                <p class="card-text" id="current-ph">Test</p>
+                                <p class="card-text" id="current-ph">Placeholder</p>
                             </div>
                         </div>
                     </div>
@@ -75,7 +87,7 @@
                         <div class="card">
                             <div class="card-body">
                                 <h6 class="card-title">Current temperature</h6>
-                                <p class="card-text" id="current-temp">Test</p>
+                                <p class="card-text" id="current-temp">Placeholder</p>
                             </div>
                         </div>
                     </div>
@@ -127,10 +139,11 @@
         <div class="card col-sm-4 control-panel">
             <div class="card-body ">
                 <h4 class="card-title" align="center">Control PH</h4>
+                <a class="btn btn btn-outline-primary col-sm-12" id="spike-ph">Spike pH</a>
+                <a class="btn btn btn-outline-primary col-sm-12" id="drop-ph">Drop pH</a>
             </div>
         </div>
     </div>
-
 
     <!--TEMPERATURE GRAPH-->
     <div class="row container-fluid" style="margin-top:10px; margin-left: 1px;">
@@ -177,47 +190,27 @@
         <div class="card col-sm-4 control-panel">
             <div class="card-body ">
                 <h4 class="card-title" align="center">Control Temps</h4>
+                <a class="btn btn btn-outline-primary col-sm-12" id="spike-temp">Spike temperature</a>
+                <a class="btn btn btn-outline-primary col-sm-12" id="drop-temp">Drop temperature</a>
             </div>
         </div>
     </div>
+    <script>
+        $('#spike-ph').onclick = function () {
 
+        };
+        $('#drop-ph').onclick = function () {
 
-    <!--<div style="margin-right: 30px; margin-top: 30px;" class="dashboard col-lg-4" id="dashboard">-->
-    <!--<h5 align="center" style="position: relative; top: 10px;">Dashboard</h5>-->
+        }
 
-    <!--<div class="displaytab">-->
-    <!--<div style="height: 160px; width: auto;">-->
-    <!--<label style="position: relative; margin-top: 5px;">Current PH</label>-->
-    <!--</div>-->
+        $('#spike-temp').onclick = function () {
 
-    <!--<button style="margin-top: 30px; margin-left: 20px;" class="btn btn-primary" id="spikePh">Spike PH</button>-->
-    <!--<button style="margin-top: 30px; margin-left: 20px;" class="btn btn-primary" id="dropPh">Drop PH</button>-->
-    <!--</div>-->
+        };
+        $('#drop-temp').onclick = function () {
 
-    <!--<div class="displaytab">-->
-    <!--<div style="height: 160px; width: auto;">-->
-    <!--<label style="position: relative; margin-top: 5px;">Current Temperature</label>-->
-    <!--</div>-->
+        }
 
-    <!--<button style="margin-top: 30px; margin-left: 20px;" class="btn btn-primary" id="spikeT">Spike Temperature-->
-    <!--</button>-->
-    <!--<button style="margin-top: 30px; margin-left: 20px;" class="btn btn-primary" id="dropT">Drop Temperature-->
-    <!--</button>-->
-    <!--</div>-->
-    <!--</div>-->
-
+    </script>
 </div>
-
-<!-- Optional JavaScript -->
-<!-- jQuery first, then Popper.js, then Bootstrap JS -->
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-        crossorigin="anonymous"></script>
-<script src="https://unpkg.com/popper.js@1.12.6/dist/umd/popper.js"
-        integrity="sha384-fA23ZRQ3G/J53mElWqVJEGJzU0sTs+SvzG8fXVWP+kJQ1lwFAOkcUOysnlKJC33U"
-        crossorigin="anonymous"></script>
-<script src="https://unpkg.com/bootstrap-material-design@4.1.1/dist/js/bootstrap-material-design.js"
-        integrity="sha384-CauSuKpEqAFajSpkdjv3z9t8E7RlpJ1UP0lKM/+NdtSarroVKu069AlsRPKkFBz9"
-        crossorigin="anonymous"></script>
 </body>
 </html>
