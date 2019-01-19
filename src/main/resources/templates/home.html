@@ -70,7 +70,6 @@
 
 <!--PH GRAPH-->
 <div class="container-fluid" align="center">
-
     <div class="row container-fluid" align="center" style="margin-top: 10px; margin-left: 1px;">
         <div class="card col-sm-7 graph-container">
             <div class="card-body">
@@ -107,7 +106,8 @@
                                         }
                                     }]
                                 }
-                            }
+                            },
+                            // counter: "0"
                         });
                     </script>
                 </div>
@@ -141,6 +141,7 @@
                         <script type="text/javascript">
                             var ctx = document.getElementById("t-graph").getContext('2d');
                             var tempChart = new Chart(ctx, {
+                                // counter: "0",
                                 type: 'line',
                                 data: {
                                     labels: [],
@@ -191,8 +192,6 @@
         </div>
     </div>
     <script>
-        var phTimelineSize = 10;
-        var phDataIndex = 0;
         /*---Spiking the stuffs---*/
         $('#spike-ph').click(function () {
             console.log("spike ph click");
@@ -210,7 +209,7 @@
                 type: "POST",
                 url: "/api/spikeTemp",
                 success: function (data) {
-                    console.log('spiked ph')
+                    console.log('spiked temp')
                 }
             })
         });
@@ -228,7 +227,6 @@
 
                     if (data > 7.5 || data < 6.5) {
                     	$("#ph-box").css('background-color', 'red');
-                    	phChart.data.datasets[0].points[phChart.data.datasets[0].points.length - 1].fillColor = "rgb(255, 0, 0)";
                     }
                     else {
                     	$("#ph-box").css('background-color', 'white');	
@@ -251,7 +249,6 @@
            
                     if (data > 30 || data < 20) {
                     	$("#temp-box").css('background-color', 'red');
-                    	tempChart.data.datasets[0].points[tempChart.data.datasets[0].points.length - 1].fillColor = "rgb(255, 0, 0)";
                     }
                     else {
                     	$("#temp-box").css('background-color', 'white');	
@@ -266,12 +263,12 @@
         // updating the chart
         function updateChart(chart, data) {
             chart.data.datasets[0].data.push(data);
-            chart.data.labels.push(chart.data.labels.length);
+            chart.data.labels.push("");
+            console.log("counter: " + chart.counter);
             if (chart.data.labels.length >= 10) {
                 chart.data.datasets[0].data.splice(0, 1);
                 chart.data.labels.splice(0, 1);
             }
-            console.log("data" + chart.data.datasets[0].data);
             chart.update();
 
         }
