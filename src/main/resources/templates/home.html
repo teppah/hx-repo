@@ -17,34 +17,21 @@
 
 <style type="text/css">
     .graph-container {
-        /*float: left;*/
-        /*display: inline-block;*/
-        /*width: 65%;*/
-        /*height: 300px;*/
-        /*background-color: white;*/
-        /*border-radius: 5px;*/
-        /*border-color: #cccccc;*/
-        /*border-style: solid;*/
-        /*border-width: 2px;*/
-        /*margin-top: 30px;*/
-        /*max-height: 30%;*/
-        max-height: 600px;
-        /*padding-right: 30px;*/
+        max-height: 450px;
         margin-right: 20px;
     }
 
     .graph-div {
         height: 100%;
     }
+
     .graph-canvas {
-        max-height: 500px;
+        max-height: 400px;
     }
+
     .control-panel {
-        /*margin-top: 10px;*/
         max-height: 600px;
     }
-
-
 </style>
 
 <body style="background-color: #f2f2f2; font-family: Trebuchet MS, Helvetica, sans-serif;">
@@ -71,7 +58,33 @@
 
 <!--PH GRAPH-->
 <div class="container-fluid" align="center">
-    <div class="row container-fluid" style="margin-top: 10px; margin-left: 1px;">
+    <div class="row" style="margin-top: 10px;" align="center">
+        <div class="card col-sm-6 mx-auto bg-info" align="center">
+            <div class="card-body">
+                <h5 class="card-title text-white">Monitor</h5>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="card">
+                            <div class="card-body">
+                                <h6 class="card-title">Current pH</h6>
+                                <p class="card-text" id="current-ph">Test</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="card">
+                            <div class="card-body">
+                                <h6 class="card-title">Current temperature</h6>
+                                <p class="card-text" id="current-temp">Test</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row container-fluid" align="center" style="margin-top: 10px; margin-left: 1px;">
         <div class="card col-sm-7 graph-container">
             <div class="card-body">
                 <h5 class="card-title" align="center">PH graph</h5>
