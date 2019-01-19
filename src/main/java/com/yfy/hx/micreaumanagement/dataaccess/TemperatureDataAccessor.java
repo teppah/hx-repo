@@ -1,4 +1,4 @@
-package com.yfy.hx.micreaumanagement.dao;
+package com.yfy.hx.micreaumanagement.dataaccess;
 
 import org.springframework.stereotype.Component;
 
@@ -6,7 +6,7 @@ import java.text.DecimalFormat;
 import java.util.Random;
 
 @Component
-public class TemperatureDao {
+public class TemperatureDataAccessor {
     public static final int LOWER = 20;
     public static final int HIGHER = 30;
 

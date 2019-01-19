@@ -1,4 +1,4 @@
-package com.yfy.hx.micreaumanagement.dao;
+package com.yfy.hx.micreaumanagement.dataaccess;
 
 import org.springframework.stereotype.Component;
 
@@ -6,7 +6,7 @@ import java.text.DecimalFormat;
 import java.util.Random;
 
 @Component
-public class PhDao {
+public class PhDataAccessor {
     public static final double LOWER = 6.5;
     public static final double HIGHER = 7.5;
 
