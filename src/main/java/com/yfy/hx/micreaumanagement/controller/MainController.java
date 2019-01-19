@@ -47,17 +47,20 @@ public class MainController {
         return sb.toString();
     }
 
+    // home mapping
     @GetMapping("home")
     public String homeView() {
         return "home";
     }
 
+    // get the next ph
     @GetMapping("api/nextPh")
     @ResponseBody
     public String getNextPh() {
         return genNextPh(nextPhSpike);
     }
 
+    // get the next temp
     @GetMapping("api/nextTemp")
     @ResponseBody
     public String getNextTempSpike() {
@@ -71,6 +74,7 @@ public class MainController {
         nextPhSpike = true;
     }
 
+    // spike temp on next data
     @GetMapping("api/spikeTemp")
     @ResponseBody
     public void spikeTemp() {
