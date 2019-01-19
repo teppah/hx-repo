@@ -38,6 +38,20 @@
       border-color: #cccccc;
       border-style: solid;
       border-width: 2px;
+      text-align: center;
+    }
+
+    .displaytab {
+    	display: inline-block;
+    	position: relative;
+    	align-self: center;
+    	margin-top: 25px;
+    	height: 250px;
+    	width: 90%;
+    	border-style: solid;
+    	border-color: #cccccc;
+    	border-width: 2px;
+    	border-radius: 5px;
     }
 
   </style>
@@ -67,32 +81,23 @@
   <content>
     <div style="margin-left: 30px; margin-top: 30px;" class="graphcontainer">
       <h5 align="center" style="position: relative; top: 10px;">PH graph</h5>
-      <div class="graphdiv">
-      	<canvas id="phgraph" width="auto" height="80px"></canvas>
+      <div class="graphdiv col-lg-12">
+      	<canvas id="phgraph" width="auto;" height="80px"></canvas>
       	<script type="text/javascript">
       		var ctx = document.getElementById("phgraph").getContext('2d');
 			var myChart = new Chart(ctx, {
 			    type: 'line',
 			    data: {
-			        labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
+			        labels: [0, 1, 2, 3, 4, 5],
 			        datasets: [{
-			            label: '# of Votes',
+			        	fill: false,
+			            label: 'PH level',
 			            data: [12, 19, 3, 5, 2, 3],
 			            backgroundColor: [
-			                'rgba(255, 99, 132, 0.2)',
-			                'rgba(54, 162, 235, 0.2)',
-			                'rgba(255, 206, 86, 0.2)',
-			                'rgba(75, 192, 192, 0.2)',
-			                'rgba(153, 102, 255, 0.2)',
-			                'rgba(255, 159, 64, 0.2)'
+							'rgba(255, 255, 255, 0.2)',
 			            ],
 			            borderColor: [
-			                'rgba(255,99,132,1)',
-			                'rgba(54, 162, 235, 1)',
-			                'rgba(255, 206, 86, 1)',
-			                'rgba(75, 192, 192, 1)',
-			                'rgba(153, 102, 255, 1)',
-			                'rgba(255, 159, 64, 1)'
+			                'rgba(0, 123, 255, 1)',
 			            ],
 			            borderWidth: 1
 			        }]
@@ -113,13 +118,61 @@
 
     <div style="margin-right: 30px; margin-top: 30px;" class="dashboard", id="dashboard">
       <h5 align="center" style="position: relative; top: 10px;">Dashboard</h5>
-      <button style="margin-top: 20px; margin-left: 10px;" class="btn btn-primary" id="addPhData">Add data</button>
+
+      <div class="displaytab">
+      	<div style="height: 150px; width: auto;">
+      		<label>Current PH</label>
+      	</div>
+
+      	<button style="margin-top: 30px; margin-left: 20px;" class="btn btn-primary" id="spikePH">Spike PH</button>
+		<button style="margin-top: 30px; margin-left: 20px;" class="btn btn-primary" id="spikePH">Drop PH</button>
+      </div>
+
+      <div class="displaytab">
+      	<div style="height: 150px; width: auto;">
+      		<label>Current Temperature</label>
+      	</div>
+
+      	<button style="margin-top: 30px; margin-left: 20px;" class="btn btn-primary" id="spikeT">Spike Temperature</button>
+		<button style="margin-top: 30px; margin-left: 20px;" class="btn btn-primary" id="spikeT">Drop Temperature</button>
+      </div>
+
     </div>
 
     <div style="margin-left: 30px; margin-top: 30px;" class="graphcontainer">
       <h5 align="center" style="position: relative; top: 10px;">Temperature graph</h5>
-      <div class="graphdiv">
-      	
+      <div class="graphdiv col-lg-12">
+      	<canvas id="Tgraph" width="auto" height="80px"></canvas>
+      	<script type="text/javascript">
+      		var ctx = document.getElementById("Tgraph").getContext('2d');
+			var myChart = new Chart(ctx, {
+			    type: 'line',
+			    data: {
+			        labels: [0, 1, 2, 3, 4, 5],
+			        datasets: [{
+			            label: 'Temperature °C',
+			            fill: false,
+			            data: [-12, -19, -3, 5, -2, 3],
+			            backgroundColor: [
+			                'rgba(255, 255, 255, 0.2)',
+			            ],
+			            borderColor: [
+							'rgba(0, 123, 255, 1)',
+			            ],
+			            borderWidth: 1
+			        }]
+			    },
+			    options: {
+			        scales: {
+			            yAxes: [{
+			                ticks: {
+			                    beginAtZero:false
+			                }
+			            }]
+			        }
+			    }
+			});
+      	</script>
       </div>
     </div>
 
