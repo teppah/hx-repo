@@ -1,4 +1,4 @@
-package com.yfy.hx.micreaumanagement.randomizers;
+package com.yfy.hx.micreaumanagement.dao;
 
 import org.springframework.stereotype.Component;
 
@@ -6,7 +6,7 @@ import java.text.DecimalFormat;
 import java.util.Random;
 
 @Component
-public class TemperatureRandomizer {
+public class TemperatureDao {
     public static final int LOWER = 20;
     public static final int HIGHER = 30;
 
