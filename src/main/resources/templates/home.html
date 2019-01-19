@@ -14,8 +14,8 @@
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-            integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+    <script src="https://code.jquery.com/jquery-3.3.1.js"
+            integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
             crossorigin="anonymous"></script>
     <script src="https://unpkg.com/popper.js@1.12.6/dist/umd/popper.js"
             integrity="sha384-fA23ZRQ3G/J53mElWqVJEGJzU0sTs+SvzG8fXVWP+kJQ1lwFAOkcUOysnlKJC33U"
@@ -79,7 +79,7 @@
                         <div class="card">
                             <div class="card-body">
                                 <h6 class="card-title">Current pH</h6>
-                                <p class="card-text" id="current-ph">Placeholder</p>
+                                <h6 class="card-text" id="current-ph">Placeholder</h6>
                             </div>
                         </div>
                     </div>
@@ -87,7 +87,7 @@
                         <div class="card">
                             <div class="card-body">
                                 <h6 class="card-title">Current temperature</h6>
-                                <p class="card-text" id="current-temp">Placeholder</p>
+                                <h6 class="card-text" id="current-temp">Placeholder</h6>
                             </div>
                         </div>
                     </div>
@@ -104,19 +104,19 @@
                     <canvas class="graph-canvas" id="ph-graph" width="auto"></canvas>
                     <script type="text/javascript">
                         var ctx = document.getElementById("ph-graph").getContext('2d');
-                        var myChart = new Chart(ctx, {
+                        var phChart = new Chart(ctx, {
                             type: 'line',
                             data: {
-                                labels: [0, 1, 2, 3, 4, 5],
+                                // labels: [0, 1, 2, 3, 4, 5],
                                 datasets: [{
                                     fill: false,
                                     label: 'PH level',
-                                    data: [12, 19, 3, 5, 2, 3],
+                                    data: [],
                                     backgroundColor: [
-                                        'rgba(255, 255, 255, 0.2)',
+                                        'rgba(255, 255, 255, 0.2)'
                                     ],
                                     borderColor: [
-                                        'rgba(0, 123, 255, 1)',
+                                        'rgba(0, 123, 255, 1)'
                                     ],
                                     borderWidth: 1
                                 }]
@@ -126,6 +126,9 @@
                                     yAxes: [{
                                         ticks: {
                                             beginAtZero: true
+                                        },
+                                        gridLines: {
+                                            drawBorder: false
                                         }
                                     }]
                                 }
@@ -139,8 +142,7 @@
         <div class="card col-sm-4 control-panel">
             <div class="card-body ">
                 <h4 class="card-title" align="center">Control PH</h4>
-                <a class="btn btn btn-outline-primary col-sm-12" id="spike-ph">Spike pH</a>
-                <a class="btn btn btn-outline-primary col-sm-12" id="drop-ph">Drop pH</a>
+                <a class="btn btn btn-outline-primary col-sm-12" id="spike-ph">Abnormal pH</a>
             </div>
         </div>
     </div>
@@ -155,14 +157,14 @@
                         <canvas class="graph-canvas" id="t-graph" width="auto"></canvas>
                         <script type="text/javascript">
                             var ctx = document.getElementById("t-graph").getContext('2d');
-                            var myChart = new Chart(ctx, {
+                            var tempChart = new Chart(ctx, {
                                 type: 'line',
                                 data: {
-                                    labels: [0, 1, 2, 3, 4, 5],
+                                    // labels: [0, 1, 2, 3, 4, 5],
                                     datasets: [{
                                         label: 'Temperature °C',
                                         fill: false,
-                                        data: [-12, -19, -3, 5, -2, 3],
+                                        data: [],
                                         backgroundColor: [
                                             'rgba(255, 255, 255, 0.2)'
                                         ],
@@ -176,7 +178,10 @@
                                     scales: {
                                         yAxes: [{
                                             ticks: {
-                                                beginAtZero: false
+                                                beginAtZero: true
+                                            },
+                                            gridLines: {
+                                                drawBorder: false
                                             }
                                         }]
                                     }
@@ -190,26 +195,98 @@
         <div class="card col-sm-4 control-panel">
             <div class="card-body ">
                 <h4 class="card-title" align="center">Control Temps</h4>
-                <a class="btn btn btn-outline-primary col-sm-12" id="spike-temp">Spike temperature</a>
-                <a class="btn btn btn-outline-primary col-sm-12" id="drop-temp">Drop temperature</a>
+                <a class="btn btn btn-outline-primary col-sm-12" id="spike-temp">Abnormal temperature</a>
             </div>
         </div>
     </div>
     <script>
-        $('#spike-ph').onclick = function () {
+        var phTimelineSize = 10;
+        var phDataIndex = 0;
+        /*---Spiking the stuffs---*/
+        $('#spike-ph').click(function () {
+            console.log("spike ph click");
+            $.ajax({
+                type: "POST",
+                url: "/api/spikePh",
+                success: function (data) {
+                    console.log('spiked ph')
+                }
+            })
+        });
+        $('#spike-temp').click(function () {
+            console.log("spike temp click");
+            $.ajax({
+                type: "POST",
+                url: "/api/spikeTemp",
+                success: function (data) {
+                    console.log('spiked ph')
+                }
+            })
+        });
 
-        };
-        $('#drop-ph').onclick = function () {
+        /*---get data every 5 seconds---*/
+        function getNextPh() {
+            console.log("getting next ph");
+            $.ajax({
+                url: "/api/nextPh",
+                method: "GET",
+                success: function (data) {
+                    console.log("next ph is " + data);
+                    $("#current-ph").text(data);
+                    // updateChart(phChart, data);
 
+                    var thisDataSet = phChart.data.datasets[0].data;
+                    if (phDataIndex < phTimelineSize) {
+                        thisDataSet[phDataIndex] = data;
+                        console.log("updating chart with data: " + data);
+                        console.log("dataset: " + phChart);
+                        phDataIndex++;
+                    } else {
+                        for (i = 0; i < phTimelineSize - 2; i++) {
+                            thisDataSet[i] = thisDataSet[i + 1];
+                        }
+                        thisDataSet[phTimelineSize - 1] = data;
+                    }
+                    phChart.update();
+                }
+            })
         }
 
-        $('#spike-temp').onclick = function () {
+        getNextPh();
+        setInterval(getNextPh, 5000);
 
-        };
-        $('#drop-temp').onclick = function () {
 
+        var tempTimelineSize = 10;
+        var tempDataIndex = 0;
+        function getNextTemp() {
+            console.log("getting next temp");
+            $.ajax({
+                url: "/api/nextTemp",
+                method: "GET",
+                success: function (data) {
+                    console.log("next temps is " + data);
+                    $("#current-temp").text(data);
+
+                    // updateChart(tempChart, data);
+                    var thisDataSet = tempChart.data.datasets[0].data;
+                    if (tempDataIndex < tempTimelineSize) {
+                        thisDataSet[phDataIndex] = data;
+                        console.log("updating chart with data: " + data);
+                        console.log("dataset: " + tempChart);
+                        tempDataIndex++;
+                    } else {
+                        for (i = 0; i < tempTimelineSize - 2; i++) {
+                            thisDataSet[i] = thisDataSet[i + 1];
+                        }
+                        thisDataSet[tempTimelineSize - 1] = data;
+                    }
+                    tempChart.update();
+                }
+            })
         }
 
+        getNextTemp();
+        setInterval(getNextTemp, 5000)
     </script>
 </div>
 </body>

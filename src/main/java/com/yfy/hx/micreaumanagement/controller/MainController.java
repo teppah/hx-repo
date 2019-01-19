@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
@@ -57,27 +58,33 @@ public class MainController {
     @GetMapping("api/nextPh")
     @ResponseBody
     public String getNextPh() {
-        return genNextPh(nextPhSpike);
+        String nextPh = genNextPh(nextPhSpike);
+        log.info("generated next ph: {}", nextPh);
+        return nextPh;
     }
 
     // get the next temp
     @GetMapping("api/nextTemp")
     @ResponseBody
-    public String getNextTempSpike() {
-        return genNextTemp(nextTempSpike);
+    public String getNextTemp() {
+        String nextTemp = genNextTemp(nextTempSpike);
+        log.info("generated next temp: {}", nextTemp);
+        return nextTemp;
     }
 
     // spike ph on next icon.png
-    @GetMapping("api/spikePh")
+    @PostMapping("api/spikePh")
     @ResponseBody
     public void spikePh() {
+        log.info("spiking ph");
         nextPhSpike = true;
     }
 
     // spike temp on next icon.png
-    @GetMapping("api/spikeTemp")
+    @PostMapping("api/spikeTemp")
     @ResponseBody
     public void spikeTemp() {
+        log.info("spiking temp");
         nextTempSpike = true;
     }
 
