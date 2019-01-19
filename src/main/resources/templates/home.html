@@ -68,8 +68,7 @@
     </nav>
 </div>
 
-<!--PH GRAPH-->
-<div class="container-fluid" align="center">
+<div class="container-fluid to-show" style="display: none" align="center">
     <div class="row container-fluid" align="center" style="margin-top: 10px; margin-left: 1px;">
         <div class="card col-sm-7 graph-container">
             <div class="card-body">
@@ -100,15 +99,16 @@
                                 scales: {
                                     yAxes: [{
                                         ticks: {
-                                            beginAtZero: true
+                                            beginAtZero: true,
+                                            suggestedMin: 0,
+                                            suggestedMax: 14
                                         },
                                         gridLines: {
                                             drawBorder: false
                                         }
                                     }]
                                 }
-                            },
-                            // counter: "0"
+                            }
                         });
                     </script>
                 </div>
@@ -131,7 +131,6 @@
         </div>
     </div>
 
-    <!--TEMPERATURE GRAPH-->
     <div class="row container-fluid" style="margin-top:10px; margin-left: 1px;">
         <div class="card col-sm-7 graph-container">
             <div class="card-body">
@@ -164,7 +163,9 @@
                                     scales: {
                                         yAxes: [{
                                             ticks: {
-                                                beginAtZero: true
+                                                // beginAtZero: true,
+                                                suggestedMin: 10,
+                                                suggestedMax: 40
                                             },
                                             gridLines: {
                                                 drawBorder: false
@@ -194,6 +195,11 @@
         </div>
     </div>
     <script>
+
+        $(document).ready(function() {
+
+            setTimeout($('div.to-show').fadeIn(500).removeClass('hidden'), 1000);
+        });
         /*---Spiking the stuffs---*/
         $('#spike-ph').click(function () {
             console.log("spike ph click");
