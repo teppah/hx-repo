@@ -89,6 +89,7 @@
                                     backgroundColor: [
                                         'rgba(255, 255, 255, 0.2)'
                                     ],
+                                    pointBorderColor: [],
                                     borderColor: [
                                         'rgba(0, 123, 255, 1)'
                                     ],
@@ -152,6 +153,7 @@
                                         backgroundColor: [
                                             'rgba(255, 255, 255, 0.2)'
                                         ],
+                                        pointBorderColor: [],
                                         borderColor: [
                                             'rgba(0, 123, 255, 1)'
                                         ],
@@ -178,7 +180,7 @@
         </div>
         <div class="card col-sm-4 control-panel">
             <div class="card-body ">
-                <h4 class="card-title" align="center">Control Temps</h4>
+                <h4 class="card-title" align="center">Control Temperature</h4>
                 <a class="btn btn btn-outline-primary col-sm-12" id="spike-temp">Abnormal temperature</a>
                 <div style="margin-top: 20px;" class="col-sm-12">
                     <div id="temp-box" class="card">
@@ -223,14 +225,16 @@
                 success: function (data) {
                     console.log("next ph is " + data);
                     $("#current-ph").text(data);
-                    updateChart(phChart, data);
-
+             
                     if (data > 7.5 || data < 6.5) {
                     	$("#ph-box").css('background-color', 'red');
+                    	phChart.data.datasets[0].pointBorderColor.push('#ff0000');
                     }
                     else {
                     	$("#ph-box").css('background-color', 'white');	
+                    	phChart.data.datasets[0].pointBorderColor.push('#4bb543');
                     }
+                    updateChart(phChart, data);
                 }
             })
         }
@@ -249,9 +253,11 @@
            
                     if (data > 30 || data < 20) {
                     	$("#temp-box").css('background-color', 'red');
+                    	tempChart.data.datasets[0].pointBorderColor.push('#ff0000');
                     }
                     else {
-                    	$("#temp-box").css('background-color', 'white');	
+                    	$("#temp-box").css('background-color', 'white');
+                    	tempChart.data.datasets[0].pointBorderColor.push('#4bb543');
                     }
                     updateChart(tempChart, data);
                 }
