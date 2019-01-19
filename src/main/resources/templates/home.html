@@ -120,13 +120,13 @@
                 <h4 class="card-title" align="center">Control PH</h4>
                 <a class="btn btn btn-outline-primary col-sm-12" id="spike-ph">Abnormal pH</a>
                 <div style="margin-top: 20px;" class="col-sm-12">
-	                <div id="ph-box" class="card">
-	                    <div class="card-body">
-	                        <h6 class="card-title">Current pH</h6>
-	                        <h6 class="card-text" id="current-ph">Placeholder</h6>
-	                    </div>
-	                </div>
-	            </div>
+                    <div id="ph-box" class="card">
+                        <div class="card-body">
+                            <h6 class="card-title">Current pH</h6>
+                            <h6 class="card-text" id="current-ph">Placeholder</h6>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -196,10 +196,7 @@
     </div>
     <script>
 
-        $(document).ready(function() {
 
-            setTimeout($('div.to-show').fadeIn(500).removeClass('hidden'), 1000);
-        });
         /*---Spiking the stuffs---*/
         $('#spike-ph').click(function () {
             console.log("spike ph click");
@@ -232,22 +229,18 @@
                     console.log("next ph is " + data);
                     $("#current-ph").text(data);
                     var phColor;
-             
+
                     if (data > 7.5 || data < 6.5) {
-                    	$("#ph-box").css('background-color', 'red');
-                    	phColor = '#ff0000';
-                    }
-                    else {
-                    	$("#ph-box").css('background-color', 'white');
+                        $("#ph-box").css('background-color', 'red');
+                        phColor = '#ff0000';
+                    } else {
+                        $("#ph-box").css('background-color', 'white');
                         phColor = '#4bb543';
                     }
                     updateChart(phChart, data, phColor);
                 }
             })
         }
-
-        getNextPh();
-        setInterval(getNextPh, 5000);
 
         function getNextTemp() {
             console.log("getting next temp");
@@ -258,27 +251,25 @@
                     console.log("next temps is " + data);
                     $("#current-temp").text(data);
                     var tColor;
-           
+
                     if (data > 30 || data < 20) {
-                    	$("#temp-box").css('background-color', 'red');
-                    	tColor = '#ff0000';
-                    }
-                    else {
-                    	$("#temp-box").css('background-color', 'white');
-                    	tColor = '#4bb543';
+                        $("#temp-box").css('background-color', 'red');
+                        tColor = '#ff0000';
+                    } else {
+                        $("#temp-box").css('background-color', 'white');
+                        tColor = '#4bb543';
                     }
                     updateChart(tempChart, data, tColor);
                 }
             })
         }
-        getNextTemp();
+
         setInterval(getNextTemp, 5000);
 
         // updating the chart
         function updateChart(chart, data, colorToPush) {
             chart.data.datasets[0].data.push(data);
             chart.data.labels.push("");
-            console.log("counter: " + chart.counter);
             if (chart.data.labels.length >= 10) {
                 chart.data.datasets[0].data.splice(0, 1);
                 chart.data.labels.splice(0, 1);
@@ -286,8 +277,50 @@
             }
             chart.data.datasets[0].pointBorderColor.push(colorToPush);
             chart.update();
-
         }
+
+        $(document).ready(function () {
+            setTimeout($('div.to-show').fadeIn(500).removeClass('hidden'), 1000);
+
+
+            setInterval(getNextPh, 5000);
+            setInterval(getNextTemp, 5000);
+
+            $.ajax({
+                url: "api/getPastPh",
+                method: "GET",
+                dataType: "json",
+                success: function (data) {
+                    console.log("past ph data: " + data.toString().split(","));
+                    // phChart.data.datasets[0].data =  data.toString().split(",");
+                    //
+                    // var toSubtract = phChart.data.datasets[0].data.length - 10;
+                    // if (toSubtract > 0) {
+                    //     phChart.data.datasets[0].data.splice(0, toSubtract);
+                    // }
+
+                }
+            });
+
+            $.ajax({
+                url: "api/getPastTemp",
+                method: "GET",
+                dataType: "json",
+                success: function (data) {
+                    console.log("past temp data: " + data.toString().split(","));
+                    // tempChart.data.datasets[0].data =  data.toString().split(",");
+                    //
+                    // var toSubtract = tempChart.data.datasets[0].data.length - 10;
+                    // if (toSubtract > 0) {
+                    //     tempChart.data.datasets[0].data.splice(0, toSubtract);
+                    // }
+                }
+            });
+
+            getNextPh();
+            getNextTemp();
+
+        });
     </script>
 </div>
 </body>
