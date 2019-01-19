@@ -225,16 +225,17 @@
                 success: function (data) {
                     console.log("next ph is " + data);
                     $("#current-ph").text(data);
+                    var phColor;
              
                     if (data > 7.5 || data < 6.5) {
                     	$("#ph-box").css('background-color', 'red');
-                    	phChart.data.datasets[0].pointBorderColor.push('#ff0000');
+                    	phColor = '#ff0000';
                     }
                     else {
-                    	$("#ph-box").css('background-color', 'white');	
-                    	phChart.data.datasets[0].pointBorderColor.push('#4bb543');
+                    	$("#ph-box").css('background-color', 'white');
+                        phColor = '#4bb543';
                     }
-                    updateChart(phChart, data);
+                    updateChart(phChart, data, phColor);
                 }
             })
         }
@@ -250,16 +251,17 @@
                 success: function (data) {
                     console.log("next temps is " + data);
                     $("#current-temp").text(data);
+                    var tColor;
            
                     if (data > 30 || data < 20) {
                     	$("#temp-box").css('background-color', 'red');
-                    	tempChart.data.datasets[0].pointBorderColor.push('#ff0000');
+                    	tColor = '#ff0000';
                     }
                     else {
                     	$("#temp-box").css('background-color', 'white');
-                    	tempChart.data.datasets[0].pointBorderColor.push('#4bb543');
+                    	tColor = '#4bb543';
                     }
-                    updateChart(tempChart, data);
+                    updateChart(tempChart, data, tColor);
                 }
             })
         }
@@ -267,14 +269,16 @@
         setInterval(getNextTemp, 5000);
 
         // updating the chart
-        function updateChart(chart, data) {
+        function updateChart(chart, data, colorToPush) {
             chart.data.datasets[0].data.push(data);
             chart.data.labels.push("");
             console.log("counter: " + chart.counter);
             if (chart.data.labels.length >= 10) {
                 chart.data.datasets[0].data.splice(0, 1);
                 chart.data.labels.splice(0, 1);
+                chart.data.datasets[0].pointBorderColor.splice(0, 1);
             }
+            chart.data.datasets[0].pointBorderColor.push(colorToPush);
             chart.update();
 
         }
