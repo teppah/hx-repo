@@ -8,7 +8,8 @@ import org.springframework.context.ConfigurableApplicationContext;
 public class MicreauManagementApplication {
 
     public static void main(String[] args) {
-        ConfigurableApplicationContext ctx = SpringApplication.run(MicreauManagementApplication.class, args);
+        ConfigurableApplicationContext ctx =
+                SpringApplication.run(MicreauManagementApplication.class, args);
     }
 
 }

@@ -264,7 +264,6 @@
             })
         }
 
-        setInterval(getNextTemp, 5000);
 
         // updating the chart
         function updateChart(chart, data, colorToPush) {
@@ -292,13 +291,6 @@
                 dataType: "json",
                 success: function (data) {
                     console.log("past ph data: " + data.toString().split(","));
-                    // phChart.data.datasets[0].data =  data.toString().split(",");
-                    //
-                    // var toSubtract = phChart.data.datasets[0].data.length - 10;
-                    // if (toSubtract > 0) {
-                    //     phChart.data.datasets[0].data.splice(0, toSubtract);
-                    // }
-
                 }
             });
 
@@ -308,12 +300,6 @@
                 dataType: "json",
                 success: function (data) {
                     console.log("past temp data: " + data.toString().split(","));
-                    // tempChart.data.datasets[0].data =  data.toString().split(",");
-                    //
-                    // var toSubtract = tempChart.data.datasets[0].data.length - 10;
-                    // if (toSubtract > 0) {
-                    //     tempChart.data.datasets[0].data.splice(0, toSubtract);
-                    // }
                 }
             });
 
